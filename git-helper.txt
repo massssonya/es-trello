@@ -1,0 +1,36 @@
+feat: Новый функционал
+fix: Исправление багов
+chore: Изменения в проекте, не касающиеся функционала (например, обновление зависимостей)
+docs: Изменения в документации
+style: Изменения в коде, не влияющие на логику (например, форматирование)
+refactor: Рефакторинг кода (изменения, не связанные с функциональностью)
+test: Добавление или изменение тестов
+perf: Улучшение производительности
+
+Examples:
+feat(user-profile): add user avatar upload feature
+fix(button): resolve issue with button hover effect
+docs(readme): update installation instructions
+
+#Как создать тег?
+
+Аннотированный тег:
+git tag -a v1.0.0 -m "Initial release"
+
+Легковесный тег:
+git tag v1.0.0
+
+Пушить теги на удаленный репозиторий:
+git push origin v1.0.0
+
+Или чтобы запушить все теги:
+git push --tags
+
+#Пример рабочего процесса:
+Работай в отдельной ветке (например, feature/login-page).
+Регулярно делай коммиты с понятными сообщениями:
+git commit -m "feat(login): create login form"
+После завершения работы и тестирования, создавай pull request.
+Если нужно, используй git rebase для чистоты истории.
+Пушь изменения в репозиторий:
+git push origin feature/login-page
