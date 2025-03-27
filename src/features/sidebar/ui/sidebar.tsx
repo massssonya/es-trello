@@ -2,9 +2,10 @@
 
 import clsx from "clsx";
 import { Box } from "@mui/material";
-import { Home, Settings } from "@mui/icons-material";
 import { useResizeble } from "../lib/useResizeble";
-import { UiButton } from "shared/ui";
+import { SidebarHeader } from "./sidebar-header";
+import { SidebarBody } from "./sidebar-body";
+import { SidebarFooter } from "./sidebar-footer";
 
 export const Sidebar = () => {
 	const { width, isResizing, handleMouseDown } = useResizeble();
@@ -14,34 +15,16 @@ export const Sidebar = () => {
 	return (
 		<Box
 			component="aside"
-			className="h-screen bg-primary text-white flex flex-col items-center p-4 transition-all relative"
+			className="h-screen bg-primary text-white flex flex-col items-center sx:p-4 p-2 transition-all relative"
 			style={{
 				width,
 				height: "100vh"
 			}}
 		>
-			<nav className="flex flex-col gap-4 w-full font-sans text-current">
-				<UiButton
-					className="!min-w-0 w-full !p-2"
-					sx={{
-						justifyContent: width > 100 ? "flex-start" : "center",
-						whiteSpace: "nowrap"
-					}}
-				>
-					<Home sx={{ minWidth: "24px" }} />
-					{width > 100 && <span className="ml-2">Dashboard</span>}
-				</UiButton>
-				<UiButton
-					className="!min-w-0 w-full !p-2"
-					sx={{
-						justifyContent: width > 100 ? "flex-start" : "center",
-						whiteSpace: "nowrap"
-					}}
-				>
-					<Settings sx={{ minWidth: "24px" }} />
-					{width > 150 && <span className="ml-2">Settings</span>}
-				</UiButton>
-			</nav>
+			<SidebarHeader isCollapsed={width < 100}  />
+
+			<SidebarBody width={width} />
+			<SidebarFooter isCollapsed={width < 100} />
 
 			<div
 				className={clsx(

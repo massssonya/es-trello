@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./styles/globals.css";
-import { Sidebar } from "features/sidebar";
+import { LayoutWrapper } from "./layout-wrapper"; // Клиентский компонент
 import { Providers } from "./providers";
 
 const poppinsSans = Poppins({
-	variable: "--font-poppins-sans",
 	subsets: ["latin"],
-	weight: ["400", "500", "600", "700"]
+	weight: ["400", "500", "600", "700"],
+	display: "swap",
+	variable: "--font-poppins-sans"
 });
 
 export const metadata: Metadata = {
@@ -17,20 +18,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children
-}: Readonly<{
+}: {
 	children: React.ReactNode;
-}>) {
+}) {
 	return (
 		<html lang="en">
-			<body
-
-				className={`${poppinsSans.variable} antialiased`}
-			>
+			<body className={`${poppinsSans.variable} antialiased`}>
 				<Providers>
-					<div className="flex min-h-screen">
-						<Sidebar />
-						<main className="flex-1">{children}</main>
-					</div>
+					<LayoutWrapper>{children}</LayoutWrapper>
+					<div id="modal-root"></div>
 				</Providers>
 			</body>
 		</html>

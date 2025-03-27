@@ -1,24 +1,21 @@
-import { Button, SxProps } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 import clsx from "clsx";
 
-export const UiButton = ({
-	children,
-	className,
-	sx
-}: {
-	children: React.ReactNode;
+interface UiButtonProps extends ButtonProps {
 	className?: string;
-	sx?: SxProps;
-}) => {
+}
+
+export const UiButton = ({ children, className, ...props }: UiButtonProps) => {
 	return (
 		<Button
 			className={clsx("!min-w-0 w-full !p-2", className)}
 			sx={{
 				color: "inherit",
 				overflow: "hidden",
-				":hover": { background: "rgba(0, 0, 0, 0.05)" },
-				...sx
+				":hover": { background: "#6B8784" },
+				...props.sx
 			}}
+			{...props}
 		>
 			{children}
 		</Button>
