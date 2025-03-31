@@ -2,8 +2,7 @@
 
 import { PageLayout } from "shared/ui";
 import { Container, Typography } from "@mui/material";
-import { CreateUserButton } from "features/create-users";
-import { GetUsersButton } from "features/get-users";
+import { ViewUserListButton } from "features/users/view-user-list";
 
 export default function Admin() {
 	return (
@@ -19,8 +18,7 @@ export default function Admin() {
 						gap: 2
 					}}
 				>
-					<CreateUserButton />
-					<GetUsersButton />
+					<ViewUserListButton />
 				</Container>
 			</PageLayout.Body>
 			<PageLayout.Footer>

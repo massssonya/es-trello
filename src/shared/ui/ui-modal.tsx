@@ -9,17 +9,19 @@ interface ModalProps {
 	onClose: () => void;
 	children: ReactNode;
 	size?: "small" | "medium" | "large" | "full";
+	contentClassName?: string;
 }
 
 export const UiModal = ({
 	isOpen,
 	onClose,
 	children,
-	size = "medium"
+	size = "medium",
+	contentClassName = ""
 }: ModalProps) => {
 	useEffect(() => {
 		if (isOpen) {
-			document.body.style.overflow = "hidden"; // Отключаем скролл
+			document.body.style.overflow = "hidden";
 		} else {
 			document.body.style.overflow = "";
 		}
@@ -35,7 +37,7 @@ export const UiModal = ({
 	};
 
 	return createPortal(
-		<div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+		<div className="fixed inset-0 flex items-center  justify-center bg-black/50 z-50">
 			<Card className={`p-6 relative ${sizeClasses[size]}`}>
 				<button
 					className="absolute top-2 right-2 text-gray-600 hover:text-black"
@@ -43,7 +45,7 @@ export const UiModal = ({
 				>
 					✖
 				</button>
-				<CardContent>{children}</CardContent>
+				<CardContent className={`${contentClassName}`}>{children}</CardContent>
 			</Card>
 		</div>,
 		document.getElementById("modal-root") as HTMLElement

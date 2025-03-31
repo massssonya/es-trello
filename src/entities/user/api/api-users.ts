@@ -1,5 +1,5 @@
 import { apiClient } from "shared/api/api-client";
-import { User } from "../model";
+import { User, UsersResponse } from "../model";
 
 export const createUser = async (
 	name: string,
@@ -14,7 +14,14 @@ export const createUser = async (
 	return response.data;
 };
 
-export const getUsers = async (): Promise<User[]> => {
+export const getUsers = async ({page, limit}: {page: number, limit: number}) => {
+	const response = await apiClient.get<UsersResponse>(`/users`, {
+		params: { page, limit },
+	});
+	return response.data;
+};
+
+export const getAllUsers = async (): Promise<User[]> => {
 	const response = await apiClient.get<User[]>("/users");
 	return response.data;
 };

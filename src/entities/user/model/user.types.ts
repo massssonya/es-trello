@@ -8,3 +8,10 @@ export type User = {
 	createdAt: Date;
 	updatedAt: Date;
 };
+
+export interface UsersResponse {
+	users: User[];
+	total: number;
+	page: number;
+	limit: number;
+  }
