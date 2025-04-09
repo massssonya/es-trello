@@ -3,13 +3,13 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
 	request: Request,
-	{ params }: { params: { id: string } }
+	context: { params: { id: string } }
 ) {
-	const { id } = params;
+	const { id } = context.params;
 	console.log("ID из URL:", id);
 
 	try {
-		const { name, email } = await request.json();
+		const { name, email, role } = await request.json();
 
 		// Получаем текущие данные пользователя
 		const existingUser = await prisma.user.findUnique({
@@ -25,7 +25,8 @@ export async function PUT(
 			where: { id },
 			data: {
 				name: name ?? existingUser.name,
-				email: email ?? existingUser.email
+				email: email ?? existingUser.email,
+				role: role ?? existingUser.role
 			}
 		});
 

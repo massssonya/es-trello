@@ -1,5 +1,5 @@
 import { apiClient } from "shared/api/api-client";
-import { User, UsersResponse } from "../model";
+import { User, UserRole, UsersResponse } from "../model";
 
 export const createUser = async (
 	name: string,
@@ -26,10 +26,12 @@ export const getAllUsers = async (): Promise<User[]> => {
 	return response.data;
 };
 
-export const changeUser = async (id: string, name: string, email: string) => {
+export const changeUser = async (id: string, name?: string, email?: string, role?: UserRole
+) => {
 	const response = await apiClient.put(`/users/${id}`, {
 		name,
-		email
+		email,
+		role
 	});
 	return response.data;
 };

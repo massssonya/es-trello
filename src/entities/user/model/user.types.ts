@@ -4,7 +4,7 @@ export type User = {
 	passwordHash: string;
 	name: string;
 	avatarUrl: string;
-	role: string;
+	role: UserRole;
 	createdAt: Date;
 	updatedAt: Date;
 };
@@ -15,3 +15,10 @@ export interface UsersResponse {
 	page: number;
 	limit: number;
   }
+
+export enum UserRole {
+	ADMIN = "ADMIN",
+	SUPER_ADMIN = "SUPER_ADMIN",
+	USER = "USER",
+	GUEST = "GUEST"
+}
