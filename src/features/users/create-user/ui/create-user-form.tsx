@@ -24,8 +24,8 @@ export const CreateUserForm = ({ onClose }: CreateUserFormProps) => {
 				label="Имя"
 				value={name}
 				onChange={(e) => setName(e.target.value)}
-				error={!name.trim()}
-				helperText={!name.trim() ? "Имя не может быть пустым" : ""}
+				// error={!name.trim()}
+				// helperText={!name.trim() ? "Имя не может быть пустым" : ""}
 				required
 			/>
 			<TextField
@@ -33,8 +33,8 @@ export const CreateUserForm = ({ onClose }: CreateUserFormProps) => {
 				type="email"
 				value={email}
 				onChange={(e) => setEmail(e.target.value)}
-				error={!/^\S+@\S+\.\S+$/.test(email)}
-				helperText={!/^\S+@\S+\.\S+$/.test(email) ? "Некорректный email" : ""}
+				// error={!/^\S+@\S+\.\S+$/.test(email)}
+				// helperText={!/^\S+@\S+\.\S+$/.test(email) ? "Некорректный email" : ""}
 				required
 			/>
 			<TextField
@@ -42,8 +42,8 @@ export const CreateUserForm = ({ onClose }: CreateUserFormProps) => {
 				type="password"
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}
-				error={password.length > 0 && password.length < 6}
-				helperText={password.length > 0 && password.length < 6 ? "Пароль должен быть не менее 6 символов" : ""}
+				// error={password.length > 0 && password.length < 6}
+				// helperText={password.length > 0 && password.length < 6 ? "Пароль должен быть не менее 6 символов" : ""}
 				required
 			/>
 			{error && <p className="text-red-500">{error}</p>}

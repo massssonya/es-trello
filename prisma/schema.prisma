@@ -7,9 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  user
-  admin
+enum UserRole {
+  ADMIN
+  SUPER_ADMIN
+  USER
+  GUEST
 }
 
 model User {
@@ -18,7 +20,7 @@ model User {
   passwordHash String
   name         String?
   avatarUrl    String?
-  role         Role    @default(user)
+  role         UserRole    @default(USER)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

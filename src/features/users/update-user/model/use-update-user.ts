@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiUsers } from "entities/user/api";
-import { User } from "entities/user/model";
+import { User, UserRole } from "entities/user/model";
 import { useState } from "react";
 
 export const useUpdateUser = () => {
@@ -22,21 +22,23 @@ export const useUpdateUser = () => {
 		mutationFn: ({
 			id,
 			name,
-			email
+			email,
+			role
 		}: {
 			id: string;
-			name: string;
-			email: string;
-		}) => apiUsers.changeUser(id, name, email),
+			name?: string;
+			email?: string;
+			role?: UserRole;
+		}) => apiUsers.changeUser(id, name, email, role),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["users"] });
 			closeModal();
 		}
 	});
 
-	const updateUser = (name: string, email: string) => {
+	const updateUser = (name?: string, email?: string, role?: UserRole) => {
 		if (!selectedUser) return;
-		updateUserMutation.mutate({ id: selectedUser.id, name, email });
+		updateUserMutation.mutate({ id: selectedUser.id, name, email, role });
 	};
 
 	return {

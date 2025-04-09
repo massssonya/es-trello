@@ -79,8 +79,7 @@ export const UserList = () => {
 			<UiModal isOpen={isModalOpen} onClose={closeModal} size="medium">
 				{selectedUser && (
 					<UpdateUserForm
-						name={selectedUser.name}
-						email={selectedUser.email}
+						user={selectedUser}
 						onSubmit={updateUser}
 					/>
 				)}
