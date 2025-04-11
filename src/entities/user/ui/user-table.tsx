@@ -9,6 +9,7 @@ import {
 	TableSortLabel
 } from "@mui/material";
 import { User } from "../model";
+import { dateUtils } from "shared/utils";
 
 interface UserTableProps {
 	users: User[];
@@ -35,7 +36,9 @@ export const UserTable = ({
 		{ id: "id", label: "ID" },
 		{ id: "name", label: "Name" },
 		{ id: "email", label: "Email" },
-		{ id: "role", label: "Role" }
+		{ id: "role", label: "Role" },
+		{ id: "createdAt", label: "Created At" },
+		{ id: "updatedAt", label: "Updated At" }
 	];
 
 	// Если это последняя страница, добавляем пустые строки
@@ -79,6 +82,8 @@ export const UserTable = ({
 							<TableCell>{user.name}</TableCell>
 							<TableCell>{user.email}</TableCell>
 							<TableCell>{user.role}</TableCell>
+							<TableCell>{dateUtils.formatDate(user.createdAt as Date)}</TableCell>
+							<TableCell>{dateUtils.formatDate(user.updatedAt as Date)}</TableCell>
 						</TableRow>
 					))}
 					{emptyRows > 0 &&

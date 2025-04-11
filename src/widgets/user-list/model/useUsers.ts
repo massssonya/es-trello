@@ -7,7 +7,7 @@ interface UsersResponse {
 	total: number;
 	page: number;
 	limit: number;
-  }
+}
 
 export const useUsers = ({ page, limit }: { page: number; limit: number }) => {
 	return useQuery<UsersResponse>({
@@ -15,7 +15,8 @@ export const useUsers = ({ page, limit }: { page: number; limit: number }) => {
 		queryFn: async (): Promise<UsersResponse> => {
 			const response = await apiUsers.getUsers({ page, limit });
 			return response;
-		  },
+		},
 		staleTime: 1000 * 60 * 5,
+		placeholderData: (previousData) => previousData
 	});
 };

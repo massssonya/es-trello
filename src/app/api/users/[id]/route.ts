@@ -1,17 +1,21 @@
 import { prisma } from "shared/api/prisma";
 import { NextResponse } from "next/server";
+import { User } from "entities/user/model";
+
+type UpdateUserRequest = Omit<
+	Partial<User>,
+	"id" | "createdAt" | "updatedAt" | "passwordHash"
+>;
 
 export async function PUT(
 	request: Request,
-	context: { params: { id: string } }
+	context: { params: Promise<{ id: string }> }
 ) {
-	const { id } = context.params;
-	console.log("ID из URL:", id);
+	const { id } = await context.params;
 
 	try {
-		const { name, email, role } = await request.json();
+		const dataToUpdate: UpdateUserRequest = await request.json();
 
-		// Получаем текущие данные пользователя
 		const existingUser = await prisma.user.findUnique({
 			where: { id }
 		});
@@ -20,13 +24,15 @@ export async function PUT(
 			return NextResponse.json({ error: "User not found" }, { status: 404 });
 		}
 
-		// Обновляем только переданные поля
+		const safeUpdateData = Object.fromEntries(
+			Object.entries(dataToUpdate).filter(([, value]) => value !== undefined)
+		);
+
 		const updatedUser = await prisma.user.update({
 			where: { id },
 			data: {
-				name: name ?? existingUser.name,
-				email: email ?? existingUser.email,
-				role: role ?? existingUser.role
+				...safeUpdateData,
+				updatedAt: new Date()
 			}
 		});
 
