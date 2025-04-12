@@ -1,5 +1,6 @@
 import { Button, MenuItem, Select, TextField } from "@mui/material";
-import { User, UserRole } from "entities/user/model";
+import { User, UserRole } from "entities/user/types";
+
 import { useState } from "react";
 
 interface UpdateUserFormProps {

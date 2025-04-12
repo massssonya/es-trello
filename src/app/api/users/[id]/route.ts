@@ -1,11 +1,8 @@
-import { prisma } from "shared/api/prisma";
 import { NextResponse } from "next/server";
-import { User } from "entities/user/model";
+import { userService } from "entities/user/model";
+import { UpdateUserRequest } from "entities/user/types";
 
-type UpdateUserRequest = Omit<
-	Partial<User>,
-	"id" | "createdAt" | "updatedAt" | "passwordHash"
->;
+
 
 export async function PUT(
 	request: Request,
@@ -14,30 +11,15 @@ export async function PUT(
 	const { id } = await context.params;
 
 	try {
-		const dataToUpdate: UpdateUserRequest = await request.json();
+		const data: UpdateUserRequest = await request.json();
+		const updatedUser = await userService.updateUserById(id, data);
 
-		const existingUser = await prisma.user.findUnique({
-			where: { id }
-		});
-
-		if (!existingUser) {
+		return NextResponse.json(updatedUser);
+	} catch (error: unknown) {
+		if (error instanceof Error && error.message === "USER_NOT_FOUND") {
 			return NextResponse.json({ error: "User not found" }, { status: 404 });
 		}
 
-		const safeUpdateData = Object.fromEntries(
-			Object.entries(dataToUpdate).filter(([, value]) => value !== undefined)
-		);
-
-		const updatedUser = await prisma.user.update({
-			where: { id },
-			data: {
-				...safeUpdateData,
-				updatedAt: new Date()
-			}
-		});
-
-		return NextResponse.json(updatedUser);
-	} catch (error) {
 		console.error("Error updating user:", error);
 		return NextResponse.json(
 			{ error: "Internal Server Error" },

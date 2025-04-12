@@ -10,7 +10,7 @@ export type User = {
 };
 
 export interface UsersResponse {
-	users: User[];
+	users: UserWithoutPassword[];
 	total: number;
 	page: number;
 	limit: number;
@@ -22,3 +22,14 @@ export enum UserRole {
 	USER = "USER",
 	GUEST = "GUEST"
 }
+
+export type UserWithoutPassword = Omit<User, "passwordHash">;
+
+export type CreateUserRequest = Pick<User, "name" | "email"> & {
+	password: string;
+};
+
+export type UpdateUserRequest = Omit<
+	Partial<User>,
+	"id" | "createdAt" | "updatedAt" | "passwordHash"
+>;

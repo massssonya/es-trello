@@ -1,6 +1,6 @@
 import { Button, TextField } from "@mui/material";
-import { User } from "../model";
 import { useState } from "react";
+import { User } from "../types";
 
 interface UserFormProps {
 	onSubmit: (data: { name: string; email: string; password?: string }) => void;

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiUsers } from "entities/user/api";
-import { User, UserRole } from "entities/user/model";
+import { User, UserRole } from "entities/user/types";
+
 import { useState } from "react";
 
 export const useUpdateUser = () => {

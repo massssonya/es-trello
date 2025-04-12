@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiUsers } from "entities/user/api";
-import { User } from "entities/user/model";
+import { UserWithoutPassword } from "entities/user/types";
 
 interface UsersResponse {
-	users: User[];
+	users: UserWithoutPassword[];
 	total: number;
 	page: number;
 	limit: number;
