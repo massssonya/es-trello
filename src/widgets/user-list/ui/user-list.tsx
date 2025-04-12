@@ -4,7 +4,7 @@ import { useUsers } from "../model/useUsers";
 import { useUpdateUser } from "features/users/update-user/model";
 import { UiModal } from "shared/ui";
 import { UpdateUserForm } from "features/users/update-user/ui";
-import { UserTableSection } from "./user-table-section";
+import { UserTable } from "entities/user/ui/user-table/user-table";
 
 export const UserList = () => {
 	const [page, setPage] = useState(0);
@@ -34,17 +34,17 @@ export const UserList = () => {
 
 	return (
 		<Paper sx={{ width: "100%", mb: 2 }}>
-			<UserTableSection
+			<UserTable
 				users={sortedUsers}
 				order={order}
 				orderBy={orderBy}
 				onRequestSort={handleSort}
 				onRowClick={openModal}
 				totalRows={data?.total || 0}
-				page={page}
 				rowsPerPage={rowsPerPage}
 				setPage={setPage}
 				setRowsPerPage={setRowsPerPage}
+				currentPage={page}
 			/>
 			<UiModal isOpen={isModalOpen} onClose={closeModal} size="medium">
 				{selectedUser && (
