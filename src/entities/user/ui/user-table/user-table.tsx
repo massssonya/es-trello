@@ -10,9 +10,10 @@ import { UserTableFooter } from "./footer";
 
 interface UserTableProps {
 	users: UserWithoutPassword[];
-	order: "asc" | "desc";
-	orderBy: string;
-	onRequestSort: (property: string) => void;
+	// order: "asc" | "desc";
+	// orderBy: string;
+	columns: { id: keyof UserWithoutPassword; label: string }[];
+	// onRequestSort: (property: string) => void;
 	onRowClick: (user: UserWithoutPassword) => void;
 	totalRows: number;
 	rowsPerPage: number;
@@ -21,20 +22,12 @@ interface UserTableProps {
 	setRowsPerPage: (rowsPerPage: number) => void;
 }
 
-const columns: { id: keyof UserWithoutPassword; label: string }[] = [
-	{ id: "id", label: "ID" },
-	{ id: "name", label: "Name" },
-	{ id: "email", label: "Email" },
-	{ id: "role", label: "Role" },
-	{ id: "createdAt", label: "Created At" },
-	{ id: "updatedAt", label: "Updated At" }
-];
-
 export const UserTable = ({
 	users,
-	order,
-	orderBy,
-	onRequestSort,
+	// order,
+	// orderBy,
+	columns,
+	// onRequestSort,
 	onRowClick,
 	totalRows,
 	rowsPerPage,
@@ -64,9 +57,9 @@ export const UserTable = ({
 		>
 			<Table stickyHeader>
 				<UserTableHead
-					order={order}
-					orderBy={orderBy}
-					onRequestSort={onRequestSort}
+					// order={order}
+					// orderBy={orderBy}
+					// onRequestSort={onRequestSort}
 					columns={columns}
 				/>
 				<UserTableBody

@@ -1,5 +1,6 @@
 import { ButtonGroup, TableCell, TableFooter, TablePagination, TableRow } from "@mui/material";
-import { CreateUserButton } from "widgets/user-list/ui/create-user-button";
+import { CreateUserButton } from "widgets/user-list/ui";
+
 
 export const UserTableFooter = ({
 	totalRows,

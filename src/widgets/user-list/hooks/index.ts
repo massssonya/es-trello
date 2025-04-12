@@ -1,0 +1,1 @@
+export {useUsersTableList} from './useUsersTableList'
