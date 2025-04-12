@@ -18,7 +18,7 @@ export const useCreateUser = (onSuccess?: () => void) => {
 			if (!/^\S+@\S+\.\S+$/.test(data.email)) throw new Error("Некорректный email.");
 			if (data.password.length < 6) throw new Error("Пароль должен быть не менее 6 символов.");
 
-			return apiUsers.createUser(data.name, data.email, data.password);
+			return apiUsers.createUser(data);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["users"] });

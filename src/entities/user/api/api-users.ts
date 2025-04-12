@@ -1,5 +1,9 @@
 import { apiClient } from "shared/api/api-client";
-import { User, UsersResponse, UserRole, UserWithoutPassword } from "../types";
+import {
+	UsersResponse,
+	UserWithoutPassword,
+	UpdateUserRequest
+} from "../types";
 
 type CreateUserPayload = {
 	name: string;
@@ -32,24 +36,13 @@ export const getAllUsers = async (): Promise<UserWithoutPassword[]> => {
 	return response.data;
 };
 
-type ChangeUserPayload = {
-	name?: string;
-	email?: string;
-	role?: UserRole;
-	avatarUrl?: string;
-};
-
-export const changeUser = async (
-	id: string,
-	name?: string,
-	email?: string,
-	role?: UserRole,
-	avatarUrl?: string
-) => {
-	const response = await apiClient.put(`/users/${id}`, {
-		name,
-		email,
-		role
-	});
+export const changeUser = async ({
+	id,
+	payload
+}: {
+	id: string;
+	payload: UpdateUserRequest;
+}) => {
+	const response = await apiClient.put(`/users/${id}`, payload);
 	return response.data;
 };

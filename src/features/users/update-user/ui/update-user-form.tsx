@@ -1,24 +1,24 @@
 import { Button, MenuItem, Select, TextField } from "@mui/material";
-import { User, UserRole } from "entities/user/types";
+import { UpdateUserRequest, UserRole, UserWithoutPassword } from "entities/user/types";
 
 import { useState } from "react";
 
 interface UpdateUserFormProps {
-	user: User;
-	onSubmit: (name?: string, email?: string, role?: UserRole) => void;
+	user: UserWithoutPassword;
+	onSubmit: (data: UpdateUserRequest) => void;
 }
 
 export const UpdateUserForm = ({ user, onSubmit }: UpdateUserFormProps) => {
 	const [role, setRole] = useState<UserRole>(user.role);
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const form = e.currentTarget;
-		const formData = new FormData(form);
-		onSubmit(
-			formData.get("name") as string,
-			formData.get("email") as string,
+		const formData = new FormData(e.currentTarget);
+		const data = {
+			name: formData.get("name") as string,
+			email: formData.get("email") as string,
 			role
-		);
+		};
+		onSubmit(data);
 	};
 
 	return (

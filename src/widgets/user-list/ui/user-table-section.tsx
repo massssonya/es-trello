@@ -4,14 +4,14 @@ import {
 } from "@mui/material";
 import { UserTable } from "entities/user/ui/user-table";
 import { CreateUserButton } from "./create-user-button";
-import { User } from "entities/user/model";
+import { UserWithoutPassword } from "entities/user/types";
 
 interface Props {
-	users: User[];
+	users: UserWithoutPassword[];
 	order: "asc" | "desc";
 	orderBy: string;
 	onRequestSort: (property: string) => void;
-	onRowClick: (user: User) => void;
+	onRowClick: (user: UserWithoutPassword) => void;
 	totalRows: number;
 	page: number;
 	rowsPerPage: number;

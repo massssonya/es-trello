@@ -1,15 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiUsers } from "entities/user/api";
-import { User, UserRole } from "entities/user/types";
-
 import { useState } from "react";
+import { apiUsers } from "entities/user/api";
+import {
+	UpdateUserRequest,
+	UserWithoutPassword
+} from "entities/user/types";
+
+type UpdateUserArgs = {
+	id: string;
+	payload: UpdateUserRequest;
+};
 
 export const useUpdateUser = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedUser, setSelectedUser] = useState<User | null>(null);
+	const [selectedUser, setSelectedUser] = useState<UserWithoutPassword | null>(null);
 	const queryClient = useQueryClient();
 
-	const openModal = (user: User) => {
+	const openModal = (user: UserWithoutPassword) => {
 		setSelectedUser(user);
 		setIsModalOpen(true);
 	};
@@ -19,27 +26,23 @@ export const useUpdateUser = () => {
 		setSelectedUser(null);
 	};
 
-	const updateUserMutation = useMutation({
-		mutationFn: ({
-			id,
-			name,
-			email,
-			role
-		}: {
-			id: string;
-			name?: string;
-			email?: string;
-			role?: UserRole;
-		}) => apiUsers.changeUser(id, name, email, role),
+	const updateUserMutation = useMutation<
+		UserWithoutPassword,
+		Error,
+		UpdateUserArgs
+	>({
+		mutationFn: ({ id, payload }: { id: string; payload: UpdateUserRequest }) =>
+			apiUsers.changeUser({ id, payload }),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["users"] });
 			closeModal();
 		}
 	});
 
-	const updateUser = (name?: string, email?: string, role?: UserRole) => {
+	const updateUser = (payload: UpdateUserRequest) => {
 		if (!selectedUser) return;
-		updateUserMutation.mutate({ id: selectedUser.id, name, email, role });
+
+		updateUserMutation.mutate({ id: selectedUser.id, payload });
 	};
 
 	return {
