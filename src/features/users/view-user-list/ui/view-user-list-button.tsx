@@ -1,8 +1,8 @@
 import { PersonSearch } from "@mui/icons-material";
 import { useState } from "react";
-import { UiModal } from "shared/ui";
-import { UiIconButton } from "shared/ui/buttons/ui-icon-button";
-import { UserList } from "widgets/user-list/ui";
+import { UserList } from "features/users/user-list/ui";
+import { UiIconButton, UiModal } from "shared/ui";
+
 
 export const ViewUserListButton = () => {
 	const [isOpen, setIsOpen] = useState(false);

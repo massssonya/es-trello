@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { UserWithoutPassword } from "entities/user/types";
 
 export const userColumns: { id: keyof UserWithoutPassword; label: string }[] = [
@@ -13,21 +13,19 @@ export const userColumns: { id: keyof UserWithoutPassword; label: string }[] = [
 export const useUsersTableList = () => {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
-	const [visibleColumns, setVisibleColumns] = useState(userColumns);
+	const [filterColumns, setFilterColumns] = useState<(keyof UserWithoutPassword)[]>(
+		userColumns.map((col) => col.id)
+	);
 
-	const hideColumn = (id: keyof UserWithoutPassword) => {
-		setVisibleColumns((cols) => cols.filter((col) => col.id !== id));
-	};
+	const visibleColumns = useMemo(
+		() => userColumns.filter((col) => filterColumns.includes(col.id)),
+		[filterColumns]
+	);
 
-	const showColumn = (id: keyof UserWithoutPassword) => {
-		const column = userColumns.find((col) => col.id === id);
-		if (column && !visibleColumns.some((c) => c.id === id)) {
-			setVisibleColumns((cols) => [...cols, column]);
-		}
-	};
-
-	const resetColumns = () => {
-		setVisibleColumns(userColumns);
+	const toggleColumn = (id: keyof UserWithoutPassword) => {
+		setFilterColumns((prev) =>
+			prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
+		);
 	};
 
 	return {
@@ -36,8 +34,8 @@ export const useUsersTableList = () => {
 		rowsPerPage,
 		setRowsPerPage,
 		visibleColumns,
-		hideColumn,
-		showColumn,
-		resetColumns
+		toggleColumn,
+		filterColumns,
+		setFilterColumns
 	};
 };

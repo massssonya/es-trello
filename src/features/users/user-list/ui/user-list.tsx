@@ -1,18 +1,18 @@
 import { Alert, CircularProgress, Paper } from "@mui/material";
-import { useUsers } from "../model/useUsers";
+
+import { useUsersTableList } from "../hooks";
+import { useUsers } from "../model";
+import { UserTable } from "./user-table";
 import { useUpdateUser } from "features/users/update-user/model";
 import { UpdateUserForm } from "features/users/update-user/ui";
-import { UserTable } from "entities/user/ui/user-table/user-table";
+import { FilterColumns } from "features/users/user-list/ui/filter-user-list-col";
 import { UiModal } from "shared/ui";
-import { useUsersTableList } from "../hooks";
 
 export const UserList = () => {
 	const {
-		// hideColumn,
-		// showColumn,
-		// resetColumns,
-		// order,
-		// orderBy,
+		filterColumns,
+		setFilterColumns,
+		toggleColumn,
 		page,
 		setPage,
 		rowsPerPage,
@@ -45,18 +45,19 @@ export const UserList = () => {
 
 	return (
 		<Paper sx={{ width: "100%", mb: 2 }}>
+			<FilterColumns />
 			<UserTable
 				users={data?.users || []}
-				// order={order}
-				// orderBy={orderBy}
-				// onRequestSort={handleSort}
+				setFilterColumns={setFilterColumns}
 				onRowClick={openModal}
 				totalRows={data?.total || 0}
 				rowsPerPage={rowsPerPage}
 				setPage={setPage}
 				setRowsPerPage={setRowsPerPage}
 				currentPage={page}
-				columns={visibleColumns}
+				filterColumns={filterColumns}
+				visibleColumns={visibleColumns}
+				toggleColumn={toggleColumn}
 			/>
 			<UiModal isOpen={isModalOpen} onClose={closeModal} size="medium">
 				{selectedUser && (

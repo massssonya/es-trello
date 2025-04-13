@@ -1,1 +1,1 @@
-export {CreateUserForm} from "./create-user-form"
+export {CreateUserButton} from "./create-user-button"

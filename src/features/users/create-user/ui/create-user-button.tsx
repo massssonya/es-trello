@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { PersonAdd } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { CreateUserForm } from "features/users/create-user/ui";
-
-import { useState } from "react";
+import { CreateUserForm } from "./create-user-form";
 import { UiModal } from "shared/ui";
+
+
 
 export const CreateUserButton = () => {
 	const [isOpen, setIsOpen] = useState(false);

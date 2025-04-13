@@ -1,39 +1,36 @@
 import {
 	Paper,
 	Table,
-	TableContainer,
+	TableContainer
 } from "@mui/material";
-import { UserWithoutPassword } from "../../types";
+import { UserWithoutPassword } from "../../../../../entities/user/types";
 import { UserTableHead } from "./header";
 import { UserTableBody } from "./body";
 import { UserTableFooter } from "./footer";
 
 interface UserTableProps {
 	users: UserWithoutPassword[];
-	// order: "asc" | "desc";
-	// orderBy: string;
-	columns: { id: keyof UserWithoutPassword; label: string }[];
-	// onRequestSort: (property: string) => void;
+	toggleColumn: (id: keyof UserWithoutPassword) => void;
 	onRowClick: (user: UserWithoutPassword) => void;
 	totalRows: number;
 	rowsPerPage: number;
 	currentPage: number;
 	setPage: (page: number) => void;
 	setRowsPerPage: (rowsPerPage: number) => void;
+	filterColumns: (keyof UserWithoutPassword)[];
+	visibleColumns: { id: keyof UserWithoutPassword; label: string }[];
+	setFilterColumns: (columns: (keyof UserWithoutPassword)[]) => void;
 }
 
 export const UserTable = ({
 	users,
-	// order,
-	// orderBy,
-	columns,
-	// onRequestSort,
 	onRowClick,
 	totalRows,
 	rowsPerPage,
 	currentPage,
 	setPage,
-	setRowsPerPage
+	setRowsPerPage,
+	visibleColumns,
 }: UserTableProps) => {
 	const handleChangePage = (_: unknown, newPage: number) => setPage(newPage);
 	const handleChangeRowsPerPage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +42,6 @@ export const UserTable = ({
 		shouldFillEmptyRows && users.length < rowsPerPage
 			? rowsPerPage - users.length
 			: 0;
-
 	return (
 		<TableContainer
 			component={Paper}
@@ -56,22 +52,17 @@ export const UserTable = ({
 			}}
 		>
 			<Table stickyHeader>
-				<UserTableHead
-					// order={order}
-					// orderBy={orderBy}
-					// onRequestSort={onRequestSort}
-					columns={columns}
-				/>
+				<UserTableHead columns={visibleColumns} />
 				<UserTableBody
 					users={users}
 					onRowClick={onRowClick}
 					emptyRows={emptyRows}
-					columns={columns}
+					columns={visibleColumns}
 				/>
 				<UserTableFooter
 					totalRows={totalRows}
 					rowsPerPage={rowsPerPage}
-					columns={columns}
+					columns={visibleColumns}
 					page={currentPage}
 					handleChangePage={handleChangePage}
 					handleChangeRowsPerPage={handleChangeRowsPerPage}

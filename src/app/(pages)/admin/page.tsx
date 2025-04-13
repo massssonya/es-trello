@@ -1,7 +1,7 @@
 "use client";
 
-import { PageLayout } from "shared/ui";
 import { Container, Typography } from "@mui/material";
+import { PageLayout } from "shared/ui";
 import { ViewUserListButton } from "features/users/view-user-list";
 
 export default function Admin() {
