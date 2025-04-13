@@ -8,7 +8,7 @@ import {
 	Select,
 	SelectChangeEvent
 } from "@mui/material";
-import { useState } from "react";
+import { UserTableColumn } from "../../types";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -21,48 +21,51 @@ const MenuProps = {
 	}
 };
 
-const names = [
-	'Oliver Hansen',
-	'Van Henry',
-	'April Tucker',
-	'Ralph Hubbard',
-	'Omar Alexander',
-	'Carlos Abbott',
-	'Miriam Wagner',
-	'Bradley Wilkerson',
-	'Virginia Andrews',
-	'Kelly Snyder',
-  ];
-
-export const FilterColumns = () => {
-	const [personName, setPersonName] = useState<string[]>([]);
-
-	const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+export const FilterColumns = ({
+	columns,
+	toggleColumn,
+	selectedColumns
+}: {
+	columns: UserTableColumn[];
+	toggleColumn: (id: string) => void;
+	selectedColumns: string[];
+}) => {
+	const handleChange = (event: SelectChangeEvent<typeof selectedColumns>) => {
 		const {
 			target: { value }
 		} = event;
-		setPersonName(
-			typeof value === "string" ? value.split(",") : value
-		);
+
+		const selectedLabels = typeof value === "string" ? value.split(",") : value;
+
+		columns.forEach((col) => {
+			const isSelected = selectedColumns.includes(col.id);
+			const shouldBeSelected = selectedLabels.includes(col.label);
+
+			if (isSelected !== shouldBeSelected) {
+				toggleColumn(col.id);
+			}
+		});
 	};
 
 	return (
 		<FormControl sx={{ m: 1, width: 500 }}>
-			<InputLabel id="demo-multiple-checkbox-label">Columns</InputLabel>
+			<InputLabel id="columns-label">Columns</InputLabel>
 			<Select
-				labelId="demo-multiple-checkbox-label"
-				id="demo-multiple-checkbox"
+				labelId="columns-label"
+				id="columns-select"
 				multiple
-				value={personName}
+				value={columns
+					.filter((col) => selectedColumns.includes(col.id))
+					.map((col) => col.label)}
 				onChange={handleChange}
 				input={<OutlinedInput label="Columns" />}
 				renderValue={(selected) => selected.join(", ")}
 				MenuProps={MenuProps}
 			>
-				{names.map((name) => (
-					<MenuItem key={name} value={name}>
-						<Checkbox checked={personName.includes(name)} />
-						<ListItemText primary={name} />
+				{columns.map((col) => (
+					<MenuItem key={col.id} value={col.label}>
+						<Checkbox checked={selectedColumns.includes(col.id)} />
+						<ListItemText primary={col.label} />
 					</MenuItem>
 				))}
 			</Select>

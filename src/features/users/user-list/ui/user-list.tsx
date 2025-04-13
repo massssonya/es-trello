@@ -17,7 +17,8 @@ export const UserList = () => {
 		setPage,
 		rowsPerPage,
 		setRowsPerPage,
-		visibleColumns
+		visibleColumns,
+		userColumns
 	} = useUsersTableList();
 
 	const { data, isLoading, error } = useUsers({
@@ -45,7 +46,11 @@ export const UserList = () => {
 
 	return (
 		<Paper sx={{ width: "100%", mb: 2 }}>
-			<FilterColumns />
+			<FilterColumns
+				columns={userColumns}
+				toggleColumn={toggleColumn}
+				selectedColumns={filterColumns}
+			/>
 			<UserTable
 				users={data?.users || []}
 				setFilterColumns={setFilterColumns}

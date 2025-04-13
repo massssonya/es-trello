@@ -17,7 +17,7 @@ interface UserTableProps {
 	currentPage: number;
 	setPage: (page: number) => void;
 	setRowsPerPage: (rowsPerPage: number) => void;
-	filterColumns: (keyof UserWithoutPassword)[];
+	filterColumns: string[];
 	visibleColumns: { id: keyof UserWithoutPassword; label: string }[];
 	setFilterColumns: (columns: (keyof UserWithoutPassword)[]) => void;
 }
