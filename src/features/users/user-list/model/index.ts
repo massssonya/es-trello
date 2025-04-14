@@ -1,1 +1,1 @@
-export {useUsers} from "./useUsers"
+export {useGetUsers} from "./use-get-users"

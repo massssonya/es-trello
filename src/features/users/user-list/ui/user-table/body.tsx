@@ -4,14 +4,14 @@ import { dateUtils } from "shared/utils";
 
 interface UserTableBodyProps {
 	users: UserWithoutPassword[];
-	onRowClick: (user: UserWithoutPassword) => void;
+	openEditUserForm: (user: UserWithoutPassword) => void;
 	emptyRows: number;
 	columns: { id: keyof UserWithoutPassword; label: string }[];
 }
 
 export const UserTableBody = ({
 	users,
-	onRowClick,
+	openEditUserForm,
 	emptyRows,
 	columns
 }: UserTableBodyProps) => (
@@ -20,7 +20,7 @@ export const UserTableBody = ({
 			<TableRow
 				key={user.id}
 				hover
-				onClick={() => onRowClick(user)}
+				onClick={() => openEditUserForm(user)}
 				className="cursor-pointer h-[60px]"
 			>
 				{columns.map((column) => {

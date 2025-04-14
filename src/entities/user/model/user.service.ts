@@ -64,3 +64,18 @@ export async function getPaginatedUsers(page: number, limit: number) {
 		limit
 	};
 }
+
+export async function deleteUser(id: string) {
+	const user = await prisma.user.findUnique({ where: { id } });
+	if (!user) {
+		throw new Error("USER_NOT_FOUND");
+	}
+	await prisma.user.delete({ where: { id } });
+	return user;
+}
+
+export async function deleteUsers(ids: string[]) {
+	await prisma.user.deleteMany({
+		where: { id: { in: ids } }
+	});
+}

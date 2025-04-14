@@ -1,17 +1,16 @@
 import { Alert, CircularProgress, Paper } from "@mui/material";
 
 import { useUsersTableList } from "../hooks";
-import { useUsers } from "../model";
-import { UserTable } from "./user-table";
-import { useUpdateUser } from "features/users/update-user/model";
-import { UpdateUserForm } from "features/users/update-user/ui";
+import { useGetUsers } from "../model";
+import { UsersTable } from "./user-table";
+import { useEditUser } from "features/users/edit-user/model";
+import { UpdateUserForm } from "features/users/edit-user/ui";
 import { FilterColumns } from "features/users/user-list/ui/filter-user-list-col";
 import { UiModal } from "shared/ui";
 
 export const UserList = () => {
 	const {
 		filterColumns,
-		setFilterColumns,
 		toggleColumn,
 		page,
 		setPage,
@@ -21,28 +20,25 @@ export const UserList = () => {
 		userColumns
 	} = useUsersTableList();
 
-	const { data, isLoading, error } = useUsers({
+	const { data, isLoading, error } = useGetUsers({
 		page: page + 1,
 		limit: rowsPerPage
 	});
 
-	const { isModalOpen, selectedUser, openModal, closeModal, updateUser } =
-		useUpdateUser();
+	const {
+		closeModal,
+		openModal,
+		isModalOpen,
+		selectedUser,
+		updateUser,
+		deleteUser,
+		isPending,
+		isError
+	} = useEditUser();
 
 	if (isLoading) return <CircularProgress />;
 	if (error)
 		return <Alert severity="error">Ошибка загрузки пользователей</Alert>;
-
-	// const [order, setOrder] = useState<"asc" | "desc">("asc");
-	// const [orderBy, setOrderBy] = useState<string>("name");
-	// const handleSort = (property: string) => {
-	// 	const isAsc = orderBy === property && order === "asc";
-	// 	setOrder(isAsc ? "desc" : "asc");
-	// 	setOrderBy(property);
-	// };
-	// const sortedUsers = data?.users?.slice().sort((a, b) =>
-	// 	order === "asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
-	// ) || [];
 
 	return (
 		<Paper sx={{ width: "100%", mb: 2 }}>
@@ -51,22 +47,25 @@ export const UserList = () => {
 				toggleColumn={toggleColumn}
 				selectedColumns={filterColumns}
 			/>
-			<UserTable
+			<UsersTable
 				users={data?.users || []}
-				setFilterColumns={setFilterColumns}
-				onRowClick={openModal}
+				openEditUserForm={openModal}
 				totalRows={data?.total || 0}
 				rowsPerPage={rowsPerPage}
 				setPage={setPage}
 				setRowsPerPage={setRowsPerPage}
 				currentPage={page}
-				filterColumns={filterColumns}
 				visibleColumns={visibleColumns}
-				toggleColumn={toggleColumn}
 			/>
 			<UiModal isOpen={isModalOpen} onClose={closeModal} size="medium">
 				{selectedUser && (
-					<UpdateUserForm user={selectedUser} onSubmit={updateUser} />
+					<UpdateUserForm
+						user={selectedUser}
+						onSubmit={updateUser}
+						onDelete={() => deleteUser(selectedUser.id)}
+						isPending={isPending}
+						isError={isError}
+					/>
 				)}
 			</UiModal>
 		</Paper>

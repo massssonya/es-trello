@@ -10,21 +10,18 @@ import { UserTableFooter } from "./footer";
 
 interface UserTableProps {
 	users: UserWithoutPassword[];
-	toggleColumn: (id: keyof UserWithoutPassword) => void;
-	onRowClick: (user: UserWithoutPassword) => void;
+	openEditUserForm: (user: UserWithoutPassword) => void;
 	totalRows: number;
 	rowsPerPage: number;
 	currentPage: number;
 	setPage: (page: number) => void;
 	setRowsPerPage: (rowsPerPage: number) => void;
-	filterColumns: string[];
 	visibleColumns: { id: keyof UserWithoutPassword; label: string }[];
-	setFilterColumns: (columns: (keyof UserWithoutPassword)[]) => void;
 }
 
-export const UserTable = ({
+export const UsersTable = ({
 	users,
-	onRowClick,
+	openEditUserForm,
 	totalRows,
 	rowsPerPage,
 	currentPage,
@@ -55,7 +52,7 @@ export const UserTable = ({
 				<UserTableHead columns={visibleColumns} />
 				<UserTableBody
 					users={users}
-					onRowClick={onRowClick}
+					openEditUserForm={openEditUserForm}
 					emptyRows={emptyRows}
 					columns={visibleColumns}
 				/>

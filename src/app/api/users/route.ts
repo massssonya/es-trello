@@ -44,3 +44,15 @@ export async function GET(req: Request) {
 		);
 	}
 }
+
+export async function DELETE(req: Request) {
+	const { ids } = await req.json();
+
+	if (!Array.isArray(ids)) {
+	  return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+	}
+
+	await userService.deleteUsers(ids);
+
+	return NextResponse.json({ success: true });
+  }

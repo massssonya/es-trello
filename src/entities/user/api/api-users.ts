@@ -42,7 +42,12 @@ export const changeUser = async ({
 }: {
 	id: string;
 	payload: UpdateUserRequest;
-}) => {
+}): Promise<UserWithoutPassword> => {
 	const response = await apiClient.put(`/users/${id}`, payload);
+	return response.data;
+};
+
+export const deleteUser = async (id: string): Promise<UserWithoutPassword> => {
+	const response = await apiClient.delete(`/users/${id}`);
 	return response.data;
 };

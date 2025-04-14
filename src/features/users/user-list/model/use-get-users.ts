@@ -9,7 +9,7 @@ interface UsersResponse {
 	limit: number;
 }
 
-export const useUsers = ({ page, limit }: { page: number; limit: number }) => {
+export const useGetUsers = ({ page, limit }: { page: number; limit: number }) => {
 	return useQuery<UsersResponse>({
 		queryKey: ["users", page, limit],
 		queryFn: async (): Promise<UsersResponse> => {

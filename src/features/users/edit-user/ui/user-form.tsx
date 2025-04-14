@@ -1,14 +1,27 @@
-import { Button, MenuItem, Select, TextField } from "@mui/material";
-import { UpdateUserRequest, UserRole, UserWithoutPassword } from "entities/user/types";
-
 import { useState } from "react";
+import { Button, MenuItem, Select, TextField } from "@mui/material";
+import {
+	UpdateUserRequest,
+	UserRole,
+	UserWithoutPassword
+} from "entities/user/types";
+import { DeleteUserButton } from "features/users/edit-user/ui/delete-user-button";
 
 interface UpdateUserFormProps {
 	user: UserWithoutPassword;
 	onSubmit: (data: UpdateUserRequest) => void;
+	onDelete: () => void;
+	isPending: boolean;
+	isError: boolean;
 }
 
-export const UpdateUserForm = ({ user, onSubmit }: UpdateUserFormProps) => {
+export const UpdateUserForm = ({
+	user,
+	onSubmit,
+	onDelete,
+	isPending,
+	isError
+}: UpdateUserFormProps) => {
 	const [role, setRole] = useState<UserRole>(user.role);
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -31,7 +44,7 @@ export const UpdateUserForm = ({ user, onSubmit }: UpdateUserFormProps) => {
 				value={role}
 				onChange={(e) => setRole(e.target.value as UserRole)}
 			>
-				<MenuItem value={"USER"}>USER</MenuItem>
+				<MenuItem value="USER">USER</MenuItem>
 				<MenuItem value="ADMIN">ADMIN</MenuItem>
 				<MenuItem value="SUPER_ADMIN">SUPER_ADMIN</MenuItem>
 				<MenuItem value="GUEST">GUEST</MenuItem>
@@ -39,6 +52,11 @@ export const UpdateUserForm = ({ user, onSubmit }: UpdateUserFormProps) => {
 			<Button variant="contained" color="primary" type="submit">
 				Save Changes
 			</Button>
+			<DeleteUserButton
+				onDelete={onDelete}
+				isPending={isPending}
+				isError={isError}
+			/>
 		</form>
 	);
 };
