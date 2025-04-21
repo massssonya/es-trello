@@ -1,1 +1,1 @@
-export { UserList } from "./user-list";
+export { ViewUserListButton } from "./view-user-list-button";

@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	icon: ReactNode;
-	label: string;
+	label?: string;
 }
 
 export const UiIconButton = ({

@@ -48,7 +48,7 @@ export const FilterColumns = ({
 	};
 
 	return (
-		<FormControl sx={{ m: 1, width: 500 }}>
+		<FormControl sx={{ m: 1, width: "45ch" }}>
 			<InputLabel id="columns-label">Columns</InputLabel>
 			<Select
 				labelId="columns-label"

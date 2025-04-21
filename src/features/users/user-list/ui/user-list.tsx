@@ -5,8 +5,8 @@ import { useGetUsers } from "../model";
 import { UsersTable } from "./user-table";
 import { useEditUser } from "features/users/edit-user/model";
 import { UpdateUserForm } from "features/users/edit-user/ui";
-import { FilterColumns } from "features/users/user-list/ui/filter-user-list-col";
 import { UiModal } from "shared/ui";
+import { MenuUserList } from "./menu-user-list";
 
 export const UserList = () => {
 	const {
@@ -42,10 +42,11 @@ export const UserList = () => {
 
 	return (
 		<Paper sx={{ width: "100%", mb: 2 }}>
-			<FilterColumns
+			<MenuUserList
 				columns={userColumns}
 				toggleColumn={toggleColumn}
 				selectedColumns={filterColumns}
+				className="flex justify-end"
 			/>
 			<UsersTable
 				users={data?.users || []}

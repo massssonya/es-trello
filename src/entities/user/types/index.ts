@@ -1,13 +1,16 @@
-export type User = {
+import { User as PrismaUser } from "@prisma/client";
+
+export type User = PrismaUser;
+
+export type PublicUser = {
 	id: string;
 	email: string;
-	passwordHash: string;
-	name: string;
-	avatarUrl: string;
-	role: UserRole;
+	name: string | null;
 	createdAt: Date;
 	updatedAt: Date;
-};
+	role: string;
+	avatarUrl: string | null;
+  };
 
 export interface UsersResponse {
 	users: UserWithoutPassword[];
@@ -17,9 +20,9 @@ export interface UsersResponse {
   }
 
 export enum UserRole {
-	ADMIN = "ADMIN",
-	SUPER_ADMIN = "SUPER_ADMIN",
 	USER = "USER",
+	SUPER_ADMIN = "SUPER_ADMIN",
+	ADMIN = "ADMIN",
 	GUEST = "GUEST"
 }
 

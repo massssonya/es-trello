@@ -1,11 +1,11 @@
 import { PersonSearch } from "@mui/icons-material";
-import { UserList } from "features/users/user-list/ui";
+
 import { UiIconButton, UiModal } from "shared/ui";
 import { useModal } from "shared/lib/hooks";
-
+import { UserList } from "./user-list";
 
 export const ViewUserListButton = () => {
-	const {close, open, isOpen} = useModal();
+	const { close, open, isOpen } = useModal();
 	return (
 		<>
 			<UiIconButton
