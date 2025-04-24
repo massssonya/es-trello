@@ -8,6 +8,8 @@ import {
 	AdminPanelSettings
 } from "@mui/icons-material";
 import { UiButton } from "shared/ui";
+import { useAuth } from "shared/lib/auth";
+import { isAdminUser } from "shared/lib/auth/roles";
 
 interface NavItem {
 	icon: React.ReactNode;
@@ -16,46 +18,51 @@ interface NavItem {
 	minWidth: number;
 }
 
-const navItems: NavItem[] = [
-	{
-		icon: <Home sx={{ minWidth: "24px" }} />,
-		label: "Dashboard",
-		href: "/",
-		minWidth: 100
-	},
-	{
-		icon: <Dashboard sx={{ minWidth: "24px" }} />,
-		label: "Boards",
-		href: "/boards",
-		minWidth: 100
-	},
-	{
-		icon: <TaskAlt sx={{ minWidth: "24px" }} />,
-		label: "My tasks",
-		href: "/tasks",
-		minWidth: 100
-	},
-	{
-		icon: <Group sx={{ minWidth: "24px" }} />,
-		label: "Teams",
-		href: "/teams",
-		minWidth: 100
-	},
-	{
-		icon: <Settings sx={{ minWidth: "24px" }} />,
-		label: "Settings",
-		href: "/settings",
-		minWidth: 100
-	},
-	{
-		icon: <AdminPanelSettings sx={{ minWidth: "24px" }} />,
-		label: "Admin",
-		href: "/admin",
-		minWidth: 100
-	}
-];
-
 export const SidebarNav = ({ width }: { width: number }) => {
+	const { user, isLoading } = useAuth();
+
+	const navItems: NavItem[] = [
+		{
+			icon: <Home sx={{ minWidth: "24px" }} />,
+			label: "Dashboard",
+			href: "/",
+			minWidth: 100
+		},
+		{
+			icon: <Dashboard sx={{ minWidth: "24px" }} />,
+			label: "Boards",
+			href: "/boards",
+			minWidth: 100
+		},
+		{
+			icon: <TaskAlt sx={{ minWidth: "24px" }} />,
+			label: "My tasks",
+			href: "/tasks",
+			minWidth: 100
+		},
+		{
+			icon: <Group sx={{ minWidth: "24px" }} />,
+			label: "Teams",
+			href: "/teams",
+			minWidth: 100
+		},
+		{
+			icon: <Settings sx={{ minWidth: "24px" }} />,
+			label: "Settings",
+			href: "/settings",
+			minWidth: 100
+		}
+	];
+
+	if (!isLoading && isAdminUser(user?.role)) {
+		navItems.push({
+			icon: <AdminPanelSettings sx={{ minWidth: "24px" }} />,
+			label: "Admin",
+			href: "/admin",
+			minWidth: 100
+		});
+	}
+
 	return (
 		<nav className="flex flex-col gap-4 font-sans text-current">
 			{navItems.map(({ icon, label, href, minWidth }) => (

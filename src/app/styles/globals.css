@@ -5,4 +5,5 @@
 html, body {
   @apply bg-background text-textMain overflow-hidden;
   font-family: "Poppins", sans-serif;
+  cursor: none;
 }

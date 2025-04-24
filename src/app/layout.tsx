@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./styles/globals.css";
-import { LayoutWrapper } from "./layout-wrapper"; // Клиентский компонент
+
 import { Providers } from "./providers";
+import { LayoutWrapper } from "widgets/layout-wrapper";
 
 const poppinsSans = Poppins({
 	subsets: ["latin"],
