@@ -4,5 +4,8 @@ export const queryKeys = {
 		all: ["users"] as const,
 		list: (page: number, limit: number) =>
 			['users', page, limit] as const,
+	},
+	boards: {
+		all: ["boards"] as const,
 	}
 }
