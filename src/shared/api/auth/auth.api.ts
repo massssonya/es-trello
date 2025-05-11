@@ -16,6 +16,7 @@ export const login = async (data: {
 
 export const logout = async (): Promise<void> => {
 	await apiClient.post("/auth/logout");
+
 };
 
 export const getMe = async (): Promise<PublicUser | null> => {

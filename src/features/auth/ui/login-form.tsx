@@ -3,7 +3,7 @@
 import { Button, TextField, Typography, Paper } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
 import * as styles from "./login-form.styles";
-import { useLogin } from "../model/useLogin";
+import { useAuth } from "../model/use-auth";
 
 type LoginFormData = {
 	email: string;
@@ -16,7 +16,7 @@ export const LoginForm = () => {
 		password: ""
 	});
 
-	const { mutate: loginUser, isPending } = useLogin();
+	const { userLogin } = useAuth();
 
 	const changeForm = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -29,7 +29,7 @@ export const LoginForm = () => {
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		loginUser(form);
+		userLogin.mutate(form);
 	};
 
 	return (
@@ -64,7 +64,7 @@ export const LoginForm = () => {
 					variant="contained"
 					color="primary"
 					sx={styles.submitButtonSx}
-					disabled={isPending}
+					disabled={userLogin.isPending}
 				>
 					Войти
 				</Button>
