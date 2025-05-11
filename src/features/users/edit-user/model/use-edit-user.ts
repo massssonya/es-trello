@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiUsers } from "entities/user/api";
 import { UpdateUserRequest, UserWithoutPassword } from "entities/user/types";
 import { useState } from "react";
+import { queryKeys } from "shared/api/query-keys";
 import { useModal } from "shared/lib/hooks";
 
 type UpdateUserArgs = {
@@ -33,7 +34,7 @@ export function useEditUser() {
 		mutationFn: ({ id, payload }: { id: string; payload: UpdateUserRequest }) =>
 			apiUsers.changeUser({ id, payload }),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["users"] });
+			queryClient.invalidateQueries({ queryKey: queryKeys.users.all });
 			closeModal();
 		}
 	});
@@ -47,7 +48,7 @@ export function useEditUser() {
 	const deleteUserMutation = useMutation({
 		mutationFn: (userId: string) => apiUsers.deleteUser(userId),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["users"] });
+			queryClient.invalidateQueries({ queryKey: queryKeys.users.all});
 			closeModal();
 		}
 	});

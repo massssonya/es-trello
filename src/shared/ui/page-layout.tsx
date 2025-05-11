@@ -10,7 +10,6 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
 					flexDirection: "column",
 					height: "85vh",
 					p: 3,
-
 				}}
 			>
 				{children}

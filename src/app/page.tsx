@@ -2,10 +2,10 @@
 
 import { Box, Button, Container, Typography, Stack } from "@mui/material";
 import Link from "next/link";
-import { useAuth } from "shared/lib/auth";
+import { authContext } from "shared/lib/auth";
 
 export default function Home() {
-	const { user, isLoading } = useAuth();
+	const { user, isLoading } = authContext();
 
 	return (
 		<Box sx={{ minHeight: "100vh", backgroundColor: "#f9fafb", pt: 16, }}>

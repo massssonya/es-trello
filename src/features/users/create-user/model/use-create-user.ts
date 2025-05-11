@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiUsers } from "entities/user/api";
+import { queryKeys } from "shared/api/query-keys";
 
 interface CreateUserInput {
 	name: string;
@@ -21,7 +22,7 @@ export const useCreateUser = (onSuccess?: () => void) => {
 			return apiUsers.createUser(data);
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["users"] });
+			queryClient.invalidateQueries({ queryKey: queryKeys.users.all });
 			onSuccess?.();
 		},
 		onError: (err: unknown) => {

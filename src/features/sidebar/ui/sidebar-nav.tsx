@@ -8,7 +8,7 @@ import {
 	AdminPanelSettings
 } from "@mui/icons-material";
 import { UiButton } from "shared/ui";
-import { useAuth } from "shared/lib/auth";
+import { authContext } from "shared/lib/auth";
 import { isAdminUser } from "shared/lib/auth/roles";
 
 interface NavItem {
@@ -19,7 +19,7 @@ interface NavItem {
 }
 
 export const SidebarNav = ({ width }: { width: number }) => {
-	const { user, isLoading } = useAuth();
+	const { user, isLoading } = authContext();
 
 	const navItems: NavItem[] = [
 		{

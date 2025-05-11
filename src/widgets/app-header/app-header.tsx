@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useAuth } from "shared/lib/auth";
+import { authContext } from "shared/lib/auth";
 import { Avatar, Box, Typography, Button } from "@mui/material";
 import { AppBar, Toolbar } from "@mui/material";
 import { AuthUserMenuList } from "features/auth/ui";
 
 export const AppHeader = () => {
-	const { user, isLoading } = useAuth();
+	const { user, isLoading } = authContext();
 
 	return (
 		<AppBar

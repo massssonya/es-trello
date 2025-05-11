@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { login, logout } from "shared/api/auth/auth.api";
+import { queryKeys } from "shared/api/query-keys";
 
 export function useAuth() {
 	const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ export function useAuth() {
 		mutationFn: login,
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: ["current-user"]
+				queryKey: queryKeys.currentUser,
 			});
 			router.push("/");
 		},
